@@ -35,4 +35,11 @@ plt.xlabel('Years of experience')
 plt.ylabel('Salary')
 plt.show()
 
+# Make single prediction:
+print(regressor.predict([[12]]))# Double square bracket(list of a list) makes the value 2D because predict method only accepts 2D arrays  
+
+# Get Linear Regression Equation coefficients:
+print(regressor.coef_) 
+print(regressor.intercept_)
+
 
