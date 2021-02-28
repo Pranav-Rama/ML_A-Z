@@ -27,6 +27,12 @@ y_pred = regressor.predict(x_test)
 np.set_printoptions(precision=2)
 print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), 1))
 
+# Find predicted dependent value for specific independent values:
+print(regressor.predict([[1, 0, 0, 160000, 130000, 300000]]))
+
+print(regressor.coef_)
+print(regressor.intercept_)
+
 
 
 
