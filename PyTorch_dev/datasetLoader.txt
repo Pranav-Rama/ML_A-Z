@@ -1,0 +1,53 @@
+import torchvision 
+import torch 
+import torchvision.transforms as transforms 
+import os 
+import matplotlib.pyplot as plt 
+import numpy as np 
+
+# Path to folders containing image files: 
+
+train_dataset_path = '/home/pranavan/Documents/PyTorch_dev/cifar10/train' 
+test_dataset_path = '/home/pranavan/Documents/PyTorch_dev/cifar10/test'
+
+# Calculate mean and std of the dataset using resized image shape then initiate:
+mean = [0.4363, 0.4328, 0.3291]
+std = [0.2129, 0.2075, 0.2038]
+
+# Tranforming images to have standard size and rotation for robust training dataset:
+
+train_transforms = transform.Compose([
+	transforms.Resize((224, 224)),
+	transforms.RandomHorizontalFlip(),
+	transforms.RandomRotation(10),
+	transforms.ToTensor(),
+	transforms.Normalize(torch.Tensor(mean), torch.Tensor(std))
+])
+
+test_transforms = transforms.Compose([
+	transforms.Resize((224, 224)),
+	transforms.ToTensor()
+	transforms.Normalize(torch.Tensor(mean), torch.Tensor(std))
+])
+
+# Initilize training and testing dataset:
+
+train_dataset = torchvision.datasets.ImageFolder(root = train_dataset_path, transform = train_transforms)
+test_dataset = torchvision.datasets.ImageFolder(root = test_dataset_path, transform = test_transforms) 
+
+# Function to show dataset:
+
+def 	show_images(dataset):
+	loader = torch.utils.data.DataLoader(dataset, batch_size = 6, shuffle=True)
+	batch = next(iter(loader))
+	images, labels = batch 
+
+	grid = torchvision.utils.make_grid(images, nrow =3) 
+	plt.figure(figsize=(11,11))
+	plt.imshow(np.transpose(grid, (1,2,0)))
+	print('labels: ', labels)
+
+show_images(train_dataset)
+
+
+	
